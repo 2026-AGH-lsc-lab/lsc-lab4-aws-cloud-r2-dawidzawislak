@@ -17,8 +17,9 @@ aws ecr get-login-password --region "$AWS_REGION" \
     "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
 
 # Build image
+export DOCKER_BUILDKIT=0
 echo "Building Docker image..."
-docker build -t "${ECR_REPO_NAME}:latest" "$WORKLOAD_DIR"
+docker build --platform linux/amd64 -t "${ECR_REPO_NAME}:latest" "$WORKLOAD_DIR"
 
 # Tag and push
 echo "Pushing image to ECR..."
